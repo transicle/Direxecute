@@ -16,7 +16,7 @@
 
 ]]
 
-assert(WebSocket and WebSocket.connect, "• WebSocket is unsupported in your env. •")
+local WebSocket = WebSocket or game:GetService("WebSocketService")
 local config = {
     name = "Direxecute",
     server = "ws://127.0.0.1:53203",
@@ -63,17 +63,27 @@ do
             print("~ Direxecute ~ Connecting to WebSocket.. ~")
         end
 
-        local success, newServer = pcall(WebSocket.connect, config.server)
-        if success and live then
-            localServer.appendServer(newServer)
-            server.OnMessage:Connect(localServer.onMessage)
+        if typeof(WebSocket) == "table" then
+            local success, newServer = pcall(WebSocket.connect, config.server)
+            if success and live then
+                localServer.appendServer(newServer)
+                server.OnMessage:Connect(localServer.onMessage)
+            end
+        elseif typeof(WebSocket) == "Instance" then
+            local newServer = WebSocket:CreateClient(config.server)
+            if newServer then
+                localServer.appendServer(newServer)
+                server.MessageReceived:Connect(localServer.onMessage)
+            end
         end
 
         if server and not loaded then
             print("~ Direxecute ~ Connected to WebSocket! (ws://127.0.0.1:53203) ~")
+        elseif not server then
+            warn("• Direxecute ~ Failed to connect to WebSocket! (Is it online?) •")
         end
 
-        loaded = true
+        loaded = server and true or false
         checking = false
     end
 end
