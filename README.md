@@ -15,6 +15,6 @@ Directly run Lua from Visual Studio Code into your Roblox environment via WebSoc
 
 ### Credits 🙏
 - **[Snipcola](https://code.snipcola.com/snipcola/Roblox-Execute)** ~ Inspiration for the WebSocket backend and Lua portion.
-- **[lily :3](https://github.com/sily-lily)** ~ Backend developer, Lua and backend fix.
+- **[lily :3](https://github.com/transicle)** ~ Backend developer, Lua and backend fix.
 
 To be clear, **Snipcola** was the original developer for the Lua portion, however I went in and changed a majority of the code, along with changing tons of things to make it work properly.
